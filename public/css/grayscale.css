@@ -220,3 +220,22 @@ img::-moz-selection {
 
 body {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2); }
+
+#player {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -405px 0px 0px -720px;
+}
+
+#play {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+}
+
+#join {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+}

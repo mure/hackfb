@@ -18,30 +18,67 @@ app.get('/', function(req, res,next) {
 });
 
 app.get('/join', function(req, res,next) {  
-    res.sendFile(__dirname + '/views/join.html');
+    res.sendFile(__dirname + '/views/Join.html');
 });
 
 
 app.get('/create', function(req, res,next) {  
-    res.sendFile(__dirname + '/views/create.html');
+    res.sendFile(__dirname + '/views/Create.html');
 });
 
 
 
-/*
-io.on('connection', function(client) {  
-    console.log('Client connected...');
+var startTime;
+var videoId;
 
-    client.on('join', function(data) {
-        client.emit('messages', 'Hello from server');
-        console.log(data);
-
-    client.on('messages', function(data) {
-           client.emit('broad', data);
-           client.broadcast.emit('broad',data);
+io.sockets.on('connection',
+  // We are given a websocket object in our function
+  function (socket) {
+  
+    console.log("We have a new client: " + socket.id);
+  
+    socket.on('init', function() { 
+        var response = {
+          id: videoId,
+          startTime: startTime,
+        };
+      
+        socket.emit('video', response);
     });
-
-});*/
+  
+    socket.on('video', function(id) {
+      videoId = id;
+      
+      var response = {
+        id: id,
+        startTime: startTime,
+      };
+      
+      io.sockets.emit('video', response);
+    });
+  
+    socket.on('sync', function() {
+      socket.emit('sync', Date.now());
+    });
+  
+    socket.on('start',
+      function(data) {
+        startTime = Date.now() + 400;
+        io.sockets.emit('start', startTime);
+      }
+    );
+  
+    socket.on('join',
+      function(data) {
+        socket.emit('join', startTime);
+      }
+    );
+  
+    socket.on('print', function(data) {
+      console.log(data);
+    });
+  }
+);
 
 
 server.listen(3000);  
