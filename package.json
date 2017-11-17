@@ -1,0 +1,16 @@
+{
+  "name": "sockettest", 
+  "version": "1.0.0",
+  "description": "test of sockets",
+  "main": "index.js",
+  "scripts": {
+    "start":"node app.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2",
+    "jquery": "^3.2.1",
+    "socket.io": "^2.0.4"
+  }
+}
